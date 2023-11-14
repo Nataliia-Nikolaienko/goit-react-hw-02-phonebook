@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import ContactForm from './components/Forms/ContactForm';
-import TodoList from './components/TodoList';
-import Filter from 'components/Filter/Filter';
+import ContactForm from './components/ContactForm';
+import ContactList from './components/ContactList';
+import Filter from 'components/Filter';
 import { nanoid } from 'nanoid';
 import css from './components/ContactForm.module.css';
 
@@ -11,25 +11,31 @@ class App extends Component {
     filter: '',
   };
 
-  addTodo = ({ newTodo, name, number }) => {
-    const todoObj = {
-      ...newTodo,
+  addContact = ({ newContact, name, number }) => {
+    const contactObj = {
+      ...newContact,
       id: nanoid(),
       name,
       number,
     };
-    for (let i = 0; i < this.state.contacts.length; i++) {
-      const nameContact = this.state.contacts;
-      if (nameContact[i].name === name) {
-        return alert(`${name} is already in contacts.`);
-      }
+    const nameContact = this.state.contacts.find(
+      contact => contact.name === name
+    );
+    if (nameContact) {
+      return alert(`${name} is already in contacts.`);
     }
+    // for (let i = 0; i < this.state.contacts.length; i++) {
+    //   const nameContact = this.state.contacts;
+    //   if (nameContact[i].name === name) {
+    //     return alert(`${name} is already in contacts.`);
+    //   }
+    // }
     this.setState(prev => ({
-      contacts: [...prev.contacts, todoObj],
+      contacts: [...prev.contacts, contactObj],
     }));
   };
 
-  deleteTodo = id => {
+  deleteContact = id => {
     this.setState(prev => ({
       contacts: prev.contacts.filter(contact => contact.id !== id),
     }));
@@ -42,7 +48,7 @@ class App extends Component {
   render() {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
-    const visibleTodos = contacts.filter(contact =>
+    const visibleContacts = contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
 
@@ -51,7 +57,6 @@ class App extends Component {
         style={{
           height: '100vh',
           display: 'flex',
-          // flexDirection: 'column',
           justifyContent: 'space-evenly',
           alignItems: 'center',
           fontSize: 40,
@@ -60,13 +65,16 @@ class App extends Component {
       >
         <div className={css.formWrapper}>
           <h1 className={css.phonebookTitle}>Phonebook</h1>
-          <ContactForm addTodo={this.addTodo} />
+          <ContactForm addContact={this.addContact} />
         </div>
 
         <div className={css.contactsWrapper}>
           <h2 className={css.contactsTitle}>Contacts</h2>
           <Filter value={filter} onChange={this.changeFilter} />
-          <TodoList contacts={visibleTodos} deleteTodo={this.deleteTodo} />
+          <ContactList
+            contacts={visibleContacts}
+            deleteContact={this.deleteContact}
+          />
         </div>
       </div>
     );

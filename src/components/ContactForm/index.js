@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import css from '../../ContactForm.module.css';
+import css from '../ContactForm.module.css';
 
 class ContactForm extends Component {
   state = {
@@ -9,8 +9,13 @@ class ContactForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addTodo(this.state);
+    this.props.addContact(this.state);
+    e.target.reset();
   };
+
+  // resetFormFields = () => {
+  //   return;
+  // };
 
   handleChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value });
@@ -18,7 +23,11 @@ class ContactForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className={css.form}>
+      <form
+        onSubmit={this.handleSubmit}
+        // reset={this.resetFormFields}
+        className={css.form}
+      >
         <div className={css.nameInputContainer}>
           <label htmlFor="exampleInputTitle" className={css.label}>
             Name

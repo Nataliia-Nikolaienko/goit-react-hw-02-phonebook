@@ -1,18 +1,18 @@
-import Todo from 'components/Todo';
+import Contact from 'components/Contact';
 import css from '../ContactForm.module.css';
 
-const TodoList = ({ contacts, deleteTodo }) => {
+const ContactList = ({ contacts, deleteContact }) => {
   return (
     <ul className={css.todoList}>
       {contacts.map(contact => (
-        <Todo
+        <Contact
           key={contact.id}
           contact={contact}
-          deleteTodo={() => deleteTodo(contact.id)}
+          deleteContact={() => deleteContact(contact.id)}
         />
       ))}
     </ul>
   );
 };
 
-export default TodoList;
+export default ContactList;

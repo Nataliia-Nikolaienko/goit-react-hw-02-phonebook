@@ -74,7 +74,7 @@
   font-size: 40px;
 }
 
-.todoListItem {
+.contactListItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -84,7 +84,7 @@
   border-radius: 10px;
 }
 
-.todoListItem:not(:last-child) {
+.contactListItem:not(:last-child) {
   margin-bottom: 10px;
 }
 
