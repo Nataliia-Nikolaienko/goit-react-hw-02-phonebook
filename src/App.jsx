@@ -11,12 +11,19 @@ class App extends Component {
     filter: '',
   };
 
-  addTodo = newTodo => {
+  addTodo = ({ newTodo, name, number }) => {
     const todoObj = {
       ...newTodo,
       id: nanoid(),
+      name,
+      number,
     };
-
+    for (let i = 0; i < this.state.contacts.length; i++) {
+      const nameContact = this.state.contacts;
+      if (nameContact[i].name === name) {
+        return alert(`${name} is already in contacts.`);
+      }
+    }
     this.setState(prev => ({
       contacts: [...prev.contacts, todoObj],
     }));
@@ -38,13 +45,14 @@ class App extends Component {
     const visibleTodos = contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
+
     return (
       <div
         style={{
           height: '100vh',
           display: 'flex',
           // flexDirection: 'column',
-          justifyContent: 'space-around',
+          justifyContent: 'space-evenly',
           alignItems: 'center',
           fontSize: 40,
           color: '#010101',
@@ -67,7 +75,7 @@ class App extends Component {
 
 export default App;
 
-// const isExist = this.state.contacts.map(contact => contact.name);
-//     if (isExist === e.currentTarget.value) {
-//       return alert(`${name} is already in contacts.`);;
+// const isExist = contacts.map(contact => contact.name);
+//     if (isExist === name) {
+//       return alert(`${name} is already in contacts.`);
 //     }
